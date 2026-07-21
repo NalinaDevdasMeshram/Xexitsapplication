@@ -1,3 +1,4 @@
+import seedAdmin from "../utilis/seedAdmin.js";
 import mongoose from "mongoose";
 
 const connectDB = async () => {
