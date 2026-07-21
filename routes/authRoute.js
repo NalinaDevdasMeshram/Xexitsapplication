@@ -7,7 +7,7 @@ import {
 import { authenticationToken } from "../middleware/authMiddleware.js";
 const router = express.Router();
 
-router.post("/auth/register", authenticationToken, registerUser);
+router.post("/auth/register", registerUser);
 router.post("/auth/login", authenticationToken, loginUser);
 router.get("/auth/verify", authenticationToken, verifyUser);
 

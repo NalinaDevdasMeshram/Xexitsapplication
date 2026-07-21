@@ -22,4 +22,5 @@ const isAdmin = (req, res, next) => {
   }
   next();
 };
+
 export { authenticationToken, isAdmin };

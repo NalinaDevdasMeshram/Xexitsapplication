@@ -1,5 +1,6 @@
 import resignation from "../models/Resignation.js";
 import response from "../models/Response.js";
+
 export const getResignations = async (req, res) => {
   try {
     const resignation = await Resignation.find()
@@ -31,11 +32,9 @@ export const concludeResignation = async (req, res, next) => {
       resignation.lwd = lwd;
     }
     await resignation.save();
-    res
-      .status(200)
-      .json({
-        message: `Resignation ${approved ? "Approved" : "Rejected"}Successfully.`,
-      });
+    res.status(200).json({
+      message: `Resignation ${approved ? "Approved" : "Rejected"}Successfully.`,
+    });
   } catch (error) {
     console.log("conclude resignation error", error);
     res
