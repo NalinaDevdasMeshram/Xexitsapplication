@@ -1,9 +1,10 @@
 import jwt from "jsonwebtoken";
 import userModel from "../models/User.js";
 import bcrypt from "bcrypt";
+
 export const registerUser = async (req, res) => {
   try {
-    const { username, email, country, password } = req.body;
+    const { username, password } = req.body;
     const existingUser = await userModel.findOne({ username });
     if (existingUser) {
       return res.status(400).json({ message: "username already present.." });
@@ -12,18 +13,18 @@ export const registerUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
     const user = new userModel({
       username: username,
-      email: email,
-      country: country,
+      // email: email,
+      // country: country,
       password: hashedPassword,
-      role: "EMPLOYEE",
+      role: "employee",
     });
     await user.save();
     const token = jwt.sign(
       {
         id: user._id,
         username: user.username,
-        email: user.email,
-        country: user.country,
+        // email: user.email,
+        // country: user.country,
         role: user.role,
       },
       process.env.JWT_SECRET,
@@ -68,7 +69,7 @@ export const loginUser = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "24h" },
     );
-    const isAdmin = user.role === "HR";
+    const isAdmin = user.role === "admin";
     res.status(200).json({ token, is_admin: isAdmin, username });
   } catch (error) {
     res.status(500).json({ message: "server error during login.." });
