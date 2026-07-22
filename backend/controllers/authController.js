@@ -1,25 +1,30 @@
 import jwt from "jsonwebtoken";
-import User from "../models/User.js";
+import userModel from "../models/User.js";
 import bcrypt from "bcrypt";
+
 export const registerUser = async (req, res) => {
   try {
     const { username, password } = req.body;
-    const existingUser = await User.findOne({ password });
+    const existingUser = await userModel.findOne({ username });
     if (existingUser) {
       return res.status(400).json({ message: "username already present.." });
     }
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-    const user = new User({
+    const user = new userModel({
       username: username,
+      // email: email,
+      // country: country,
       password: hashedPassword,
-      role: "empoyee",
+      role: "employee",
     });
     await user.save();
     const token = jwt.sign(
       {
         id: user._id,
         username: user.username,
+        // email: user.email,
+        // country: user.country,
         role: user.role,
       },
       process.env.JWT_SECRET,
@@ -33,13 +38,17 @@ export const registerUser = async (req, res) => {
       username: username,
     });
   } catch (error) {
-    res.status(404).json({ message: "Server error during registration.." });
+    console.log(error);
+    res.status(404).json({
+      message: "Server error during registration..",
+    });
   }
 };
-export const loginUser = async (res, req) => {
+
+export const loginUser = async (req, res) => {
   try {
     const { username, password } = req.body;
-    const user = await User.findOne({ username });
+    const user = await userModel.findOne({ username });
     if (!user) {
       return res
         .status(404)
@@ -53,25 +62,28 @@ export const loginUser = async (res, req) => {
     }
     const token = jwt.sign(
       {
-        id: user_id,
+        id: user._id,
         username: user.username,
         role: user.role,
       },
       process.env.JWT_SECRET,
       { expiresIn: "24h" },
     );
-
     const isAdmin = user.role === "admin";
     res.status(200).json({ token, is_admin: isAdmin, username });
   } catch (error) {
     res.status(500).json({ message: "server error during login.." });
   }
 };
+
 export const verifyUser = async (req, res) => {
-  const token = req.header("Authorization");
-  if (!token) {
+  const authHeader = req.header("Authorization");
+  if (!authHeader) {
     return res.status(401).json({ valid: false, message: "No token provided" });
   }
+  const token = authHeader.startsWith("Bearer ")
+    ? authHeader.split(" ")[1]
+    : authHeader;
   try {
     const verified = jwt.verify(token, process.env.JWT_SECRET);
     const isAdmin = verified.role === "admin";

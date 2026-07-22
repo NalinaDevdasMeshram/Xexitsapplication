@@ -1,11 +1,16 @@
 import jwt from "jsonwebtoken";
 
 const authenticationToken = (req, res, next) => {
-  const token = req.header("Authorization");
-  if (!token)
+  console.log(req.headers);
+  const authHeader = req.header("Authorization");
+  if (!authHeader)
     return res
       .status(404)
       .json({ message: "Access denied. No token provided." });
+
+  const token = authHeader.startsWith("Bearer ")
+    ? authHeader.split(" ")[1]
+    : authHeader;
   try {
     const verified = jwt.verify(token, process.env.JWT_SECRET);
     req.user = verified;
@@ -22,4 +27,5 @@ const isAdmin = (req, res, next) => {
   }
   next();
 };
+
 export { authenticationToken, isAdmin };

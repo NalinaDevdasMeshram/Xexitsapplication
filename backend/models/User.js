@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const User = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
@@ -8,31 +8,23 @@ const User = new mongoose.Schema(
       unique: true,
       trim: true,
     },
+    email: { type: String, required: true },
+    country: { type: String, required: true },
     password: {
       type: String,
       required: true,
     },
-    name: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    country: {
-      type: String,
-      required: true,
-    },
+
     role: {
       type: String,
-      enum: ["HR", "EMPLOYEE"],
-      default: "EMPLOYEE",
+      enum: ["employee", "admin"],
+      default: "employee",
     },
   },
   { timestamps: true },
 );
 
-const userModel = mongoose.model("Userschema", User);
+const userModel =
+  mongoose.models.Userschema || mongoose.model("Userschema", userSchema);
+
 export default userModel;
