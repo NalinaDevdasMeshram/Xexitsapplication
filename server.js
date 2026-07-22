@@ -11,11 +11,7 @@ import adminRoute from "./routes/adminRoute.js";
 
 //connect to mongodb
 app.use(express.json());
-app.use(
-  cors({
-    origin: "http://localhost:5174",
-  }),
-);
+app.use(cors({ origin: allowedOrigins, credentials: true }));
 
 app.use("/api", authRoute);
 app.use("/api", userRoute);
