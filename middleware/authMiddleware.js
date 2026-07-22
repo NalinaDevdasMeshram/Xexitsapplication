@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 
 const authenticationToken = (req, res, next) => {
+  console.log(req.headers.origin);
   const token = req.header("Authorization");
   if (!token)
     return res
