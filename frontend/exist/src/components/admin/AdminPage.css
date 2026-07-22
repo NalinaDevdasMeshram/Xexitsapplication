@@ -1,0 +1,111 @@
+.admin-resign-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.admin-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.admin-resign-list {
+  margin-top: 20px;
+  width: 80%;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+.admin-resign-header {
+  background-color: rgba(0, 0, 0, 0.475);
+  color: white;
+  text-align: left;
+}
+
+.admin-resign-header-row th {
+  padding: 16px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.admin-resign-body {
+  background-color: white;
+}
+
+.admin-resign-body-row {
+  border: 0 10px;
+}
+
+.admin-resign-body-row td {
+  padding: 16px;
+  border-bottom: 1px solid #dddddd48;
+  font-size: 18px;
+}
+
+.admin-resign-body-row button {
+  padding: 6px 12px;
+  background-color: rgb(0, 0, 0);
+  border: 2px solid rgb(0, 0, 0);
+  cursor: pointer;
+  font-size: 14px;
+  color: #ffffff;
+  border-radius: 4px;
+}
+
+/* src/pages/Responses.css */
+.responses-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  background-color: #fff;
+  color: #000;
+  font-family: Arial, sans-serif;
+  justify-content: center;
+}
+
+.response-card {
+  border: 2px solid #000;
+  padding: 16px;
+  max-width: 400px;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.response-card:hover {
+  transform: scale(1.02);
+}
+
+.employee-id {
+  margin-bottom: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  border-bottom: 1px solid #000;
+  padding-bottom: 5px;
+}
+
+.responses-list {
+  margin-top: 10px;
+}
+
+.response-item {
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  /* border-bottom: 1px dashed #000; */
+}
+
+.response-item:last-child {
+  border-bottom: none;
+}
+
+.question {
+  font-weight: bold;
+}
+
+.answer {
+  margin-top: 4px;
+  color: #333;
+}
