@@ -20,7 +20,10 @@ export const submitResignation = async (req, res) => {
         .status(400)
         .json({ message: "you already have pending resignation request.." });
     }
-    const resignation = new Resignation({ employeeId: employeeId, lwd: lwd });
+    const resignation = new resignationModel({
+      employeeId,
+      lwd,
+    });
     await resignation.save();
     res.status(200).json({
       date: {

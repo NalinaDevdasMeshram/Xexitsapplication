@@ -8,7 +8,7 @@ import { authenticationToken } from "../middleware/authMiddleware.js";
 const router = express.Router();
 
 router.post("/auth/register", registerUser);
-router.post("/auth/login", authenticationToken, loginUser);
+router.post("/auth/login", loginUser);
 router.get("/auth/verify", authenticationToken, verifyUser);
 
 export default router;

@@ -1,7 +1,8 @@
-import userModel from "../models/user.js";
+import userModel from "../models/User.js";
+
 const seedAdmin = async () => {
   try {
-    const adminExists = await User.findOne({ username: "Admin" });
+    const adminExists = await userModel.findOne({ username: "Admin" });
     if (adminExists) {
       const salt = await bcrypt.genSalt(10);
       const hashedpassword = await bcrypt.hash("admin", salt);
