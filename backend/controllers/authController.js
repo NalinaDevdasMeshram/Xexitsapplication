@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import userModel from "../models/User.js";
 import bcrypt from "bcrypt";
 
-export const registerUser = async (req, res) => {
+export const register = async (req, res) => {
   try {
     const { username, password } = req.body;
     const existingUser = await userModel.findOne({ username });
@@ -45,7 +45,7 @@ export const registerUser = async (req, res) => {
   }
 };
 
-export const loginUser = async (req, res) => {
+export const login = async (req, res) => {
   try {
     const { username, password } = req.body;
     const user = await userModel.findOne({ username });
@@ -76,7 +76,7 @@ export const loginUser = async (req, res) => {
   }
 };
 
-export const verifyUser = async (req, res) => {
+export const verify = async (req, res) => {
   const authHeader = req.header("Authorization");
   if (!authHeader) {
     return res.status(401).json({ valid: false, message: "No token provided" });
