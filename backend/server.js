@@ -11,7 +11,16 @@ import adminRoute from "./routes/adminRoute.js";
 
 //connect to mongodb
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://xexitsapplication-3qo7.vercel.app",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true,
+  }),
+);
 app.use(express.json());
 
 app.use("/api", authRoute);
