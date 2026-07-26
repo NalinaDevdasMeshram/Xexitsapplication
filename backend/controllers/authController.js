@@ -13,8 +13,6 @@ export const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
     const user = new userModel({
       username: username,
-      // email: email,
-      // country: country,
       password: hashedPassword,
       role: "employee",
     });
@@ -23,8 +21,6 @@ export const register = async (req, res) => {
       {
         id: user._id,
         username: user.username,
-        // email: user.email,
-        // country: user.country,
         role: user.role,
       },
       process.env.JWT_SECRET,

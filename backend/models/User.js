@@ -8,13 +8,12 @@ const userSchema = new mongoose.Schema(
       unique: true,
       trim: true,
     },
-    // email: { type: String, required: true },
-    // country: { type: String, required: true },
+    // email:{ type: String, required: true },
+    // country:{ type: String, required: true },
     password: {
       type: String,
       required: true,
     },
-
     role: {
       type: String,
       enum: ["employee", "admin"],
