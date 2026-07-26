@@ -1,6 +1,9 @@
 // backend:https://xexitsapplication.onrender.com
-// const API_URL = "http://localhost:8085";
+// const API_URL = "http://localhost:8088";
+
 const API_URL = "https://xexitsapplication.onrender.com";
+console.log("API_URL", API_URL);
+
 export const loginUser = async (username, password) => {
   const res = await fetch(`${API_URL}/api/auth/login`, {
     method: "POST",

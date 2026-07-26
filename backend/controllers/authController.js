@@ -27,7 +27,7 @@ export const register = async (req, res) => {
       { expiresIn: "24h" },
     );
     const isAdmin = user.role === "admin";
-    res.status(200).json({
+    res.status(201).json({
       message: "user registered successfully.",
       token: token,
       is_admin: isAdmin,
