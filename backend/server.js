@@ -27,6 +27,10 @@ app.use("/api", authRoute);
 app.use("/api", userRoute);
 app.use("/api", adminRoute);
 
+app.get("/api/test", (req, res) => {
+  res.json({ message: "API working" });
+});
+
 app.listen(PORT, async () => {
   await connectDB();
   console.log(`Server is running on port ${PORT}`);
