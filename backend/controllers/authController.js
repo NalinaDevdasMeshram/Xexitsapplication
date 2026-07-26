@@ -38,10 +38,8 @@ export const register = async (req, res) => {
       username: username,
     });
   } catch (error) {
-    console.log(error);
-    res.status(404).json({
-      message: "Server error during registration..",
-    });
+    console.error("Registration Error:", error);
+    res.status(500).json({ message: error.message });
   }
 };
 
