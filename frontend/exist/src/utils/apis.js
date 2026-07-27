@@ -49,6 +49,7 @@ export const getResignationStatus = async (token) => {
 };
 
 export const submitQuestionnaire = async (responses, token) => {
+  console.log(formData);
   const res = await fetch(`${API_URL}/api/user/responses`, {
     method: "POST",
     headers: {

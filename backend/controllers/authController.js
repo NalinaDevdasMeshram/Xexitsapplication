@@ -5,7 +5,9 @@ import bcrypt from "bcrypt";
 export const register = async (req, res) => {
   try {
     const { username, password } = req.body;
+    console.log(req.body);
     const existingUser = await userModel.findOne({ username });
+
     if (existingUser) {
       return res.status(400).json({ message: "username already present.." });
     }
@@ -28,7 +30,7 @@ export const register = async (req, res) => {
     );
     const isAdmin = user.role === "admin";
     res.status(201).json({
-      message: "user registered successfully.",
+      message: "User registered successfully",
       token: token,
       is_admin: isAdmin,
       username: username,
