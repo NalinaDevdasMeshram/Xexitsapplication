@@ -13,7 +13,7 @@ describe("Backend API Tests for Employee and Admin Role", () => {
       expect(response.status).to.eq(201);
       expect(response.body).to.have.property(
         "message",
-        "User registered successfully"
+        "User registered successfully",
       );
     });
   });
@@ -83,7 +83,7 @@ describe("Backend API Tests for Employee and Admin Role", () => {
       body: {
         resignationId: employeeResignationId,
         approved: true,
-        lwd: "26 Dec 2025",
+        lwd: "2025-12-26",
       },
     }).then((response) => {
       expect(response.status).to.eq(200);

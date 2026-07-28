@@ -4,7 +4,7 @@ const resignationSchema = new mongoose.Schema(
   {
     employeeId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: "Userschema",
       required: true,
     },
     lwd: {
@@ -21,5 +21,8 @@ const resignationSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-const resignationModel = mongoose.model("registration", resignationSchema);
+const resignationModel =
+  mongoose.models.Resignation ||
+  mongoose.model("Resignation", resignationSchema);
+
 export default resignationModel;

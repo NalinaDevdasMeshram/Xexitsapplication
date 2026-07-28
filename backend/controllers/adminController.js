@@ -1,13 +1,15 @@
-import resignation from "../models/Resignation.js";
+import resignationModel from "../models/Resignation.js";
 import response from "../models/Response.js";
 
 export const getResignations = async (req, res) => {
   try {
-    const resignation = await Resignation.find()
-      .populated("employeeId", "username")
-      .approved("employeeId lwd status reason");
-    res.status(200).json({ data: resignation });
+    const resignation = await resignationModel
+      .find()
+      .populate("employeeId", "username")
+      .select("employeeId lwd status reason");
+    return res.status(200).json({ data: resignation });
   } catch (error) {
+    console.error("Get resignations error:", error);
     res
       .status(500)
       .json({ message: "server error while fetching resignation.." });
@@ -15,13 +17,16 @@ export const getResignations = async (req, res) => {
 };
 
 export const concludeResignation = async (req, res, next) => {
+  console.log("Headers:", req.headers);
+  console.log("Body:", req.body);
   try {
     const { resignationId, approved, lwd } = req.body;
-    const resignation = await Resignation.findById(resignationId);
+    console.log("request", req.body);
+    const resignation = await resignationModel.findById(resignationId);
     if (!resignation) {
-      res.status(404).json({ message: "resignation not found.." });
+      return res.status(404).json({ message: "resignation not found" });
     }
-    resignation.status = approved ? "approved" : "rejected";
+    resignation.status = approved ? "Approved" : "Rejected";
     if (approved && lwd) {
       const lwdDate = new Date(lwd);
       if (isNaN(lwdDate.getTime())) {
@@ -32,12 +37,12 @@ export const concludeResignation = async (req, res, next) => {
       resignation.lwd = lwd;
     }
     await resignation.save();
-    res.status(200).json({
+    return res.status(200).json({
       message: `Resignation ${approved ? "Approved" : "Rejected"}Successfully.`,
     });
   } catch (error) {
     console.log("conclude resignation error", error);
-    res
+    return res
       .status(500)
       .json({ message: "server error while processing the resignation" });
   }
@@ -45,9 +50,14 @@ export const concludeResignation = async (req, res, next) => {
 
 export const getExitResponses = async (req, res) => {
   try {
-    const responses = await Response.find().select("employeeId response.");
-    res.status(200).json({ data: responses });
+    const responses = await response
+      .find()
+      .populate("employeeId", "username")
+      .select("employeeId responses");
+    return res.status(200).json({ data: responses });
   } catch (error) {
-    res.status(500).json({ message: "Server error while fetching responses" });
+    return res
+      .status(500)
+      .json({ message: "Server error while fetching responses" });
   }
 };

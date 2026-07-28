@@ -47,21 +47,23 @@ export const submitQuestionnaire = async (req, res) => {
   try {
     const { responses } = req.body;
     const employeeId = req.user.id;
-    if (Array.isArray(responses) || responses.length === 0) {
-      res.status(400).json({ message: "Response must be an empty array." });
+    if (!Array.isArray(responses) || responses.length === 0) {
+      return res
+        .status(400)
+        .json({ message: "Response must be an empty array." });
     }
-    const responseEntry = new ResponseModel({
+    const responseEntry = new response({
       employeeId: employeeId,
       responses: responses,
     });
 
     await responseEntry.save();
-    res
+    return res
       .status(200)
       .json({ message: "Exit questionnaire submitted successfully" });
   } catch (error) {
     console.log("server error during questionnaire submission", error);
-    res
+    return res
       .status(500)
       .json({ message: "server error during questionnaire submission." });
   }

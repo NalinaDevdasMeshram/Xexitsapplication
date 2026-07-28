@@ -1,8 +1,8 @@
 import mongoose, { model } from "mongoose";
 const responseSchema = new mongoose.Schema({
-  employeeid: {
+  employeeId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: "Userschema",
     Required: true,
   },
   responses: [
