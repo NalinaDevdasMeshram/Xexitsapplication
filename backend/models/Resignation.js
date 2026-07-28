@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const resignationSchema = new mongoose.Schema(
   {
-    employee: {
+    employeeId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
@@ -13,6 +13,7 @@ const resignationSchema = new mongoose.Schema(
     },
     status: {
       type: String,
+      required: true,
       enum: ["Pending", "Approved", "Rejected"],
       default: "Pending",
     },

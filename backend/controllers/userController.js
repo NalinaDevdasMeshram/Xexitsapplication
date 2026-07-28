@@ -8,12 +8,15 @@ export const submitResignation = async (req, res) => {
     const lwdDate = new Date(lwd);
     if (isNaN(lwdDate.getTime())) {
       return res
-        .status(500)
-        .json({ message: "Invalid Date formate. use YYYY-MM-DD" });
+        .status(400)
+        .json({ message: "Invalid date format.use YYYY-MM-DD" });
     }
+    console.log("req.user:", req.user);
+    console.log("employeeId:", employeeId);
+    console.log("lwd:", lwd);
     const existingResignation = await resignationModel.findOne({
       employeeId,
-      status: "pending",
+      status: "Pending",
     });
     if (existingResignation) {
       return res
@@ -26,7 +29,7 @@ export const submitResignation = async (req, res) => {
     });
     await resignation.save();
     res.status(200).json({
-      date: {
+      data: {
         resignation: {
           _id: resignation._id,
         },
@@ -36,7 +39,7 @@ export const submitResignation = async (req, res) => {
     console.log("resignation submission error:", error);
     res
       .status(500)
-      .json({ message: "server error duration resignation submission" });
+      .json({ message: "Server error duration resignation submission" });
   }
 };
 
