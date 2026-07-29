@@ -14,7 +14,7 @@ import adminRoute from "./routes/adminRoute.js";
 app.use(
   cors({
     origin: [
-      "http://localhost:5173",
+      "http://localhost:3001",
       "https://xexitsapplication-3qo7.vercel.app",
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
