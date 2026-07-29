@@ -3,7 +3,7 @@ const app = express();
 import dotenv from "dotenv";
 import cors from "cors";
 dotenv.config();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3001;
 import connectDB from "./config/db.js";
 import authRoute from "./routes/authRoute.js";
 import userRoute from "./routes/userRoute.js";
@@ -15,7 +15,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:3001",
-      "https://xexitsapplication-3qo7.vercel.app",
+      "https://xexitsapplication-3qo7.vercel.app/",
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
