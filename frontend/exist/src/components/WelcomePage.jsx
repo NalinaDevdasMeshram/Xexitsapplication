@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { loginUser, registerUser } from "../utils/apis";
 import { useNavigate } from "react-router-dom";
-
 import "./WelcomePage.css";
 
 const WelcomePage = () => {
@@ -20,53 +19,52 @@ const WelcomePage = () => {
   const navigate = useNavigate();
 
   const handlerEmployeeLogin = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
+    try {
+      const { username, password } = user;
+      const loggedInUser = await loginUser(username, password);
 
-    const { username, password } = user;
+      if (!loggedInUser || !loggedInUser.username) {
+        alert("Wrong username or password");
+        setUser({ username: "", password: "" });
+        return;
+      }
 
-    const loggedInUser = await loginUser(username, password);
-    if (!loggedInUser.username) {
-      alert("wrong username or password");
-      setUser({
-        username: "",
-        password: "",
-      });
-      return;
+      setUser({ username: "", password: "" });
+      navigate(loggedInUser.is_admin ? "/admin" : "/employee");
+    } catch (error) {
+      console.error("Login failed:", error);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
-    if (loggedInUser.is_admin) {
-      navigate("/admin");
-    } else {
-      navigate("/employee");
-    }
-    setUser({
-      username: "",
-      password: "",
-    });
   };
 
   const handlerEmployeeRegister = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
     const { username, password, confirmpassword } = userRegister;
+
     if (password !== confirmpassword) {
-      alert("password and confirmpassword are not same");
+      alert("Password and confirm password are not the same");
       return;
     }
 
-    const registeredUser = await registerUser(username, password);
-    setIsLoading(false);
-    if (registeredUser.is_admin) {
-      navigate("/admin");
-    } else {
-      navigate("/employee");
+    setIsLoading(true);
+    try {
+      const registeredUser = await registerUser(username, password);
+
+      if (!registeredUser) {
+        alert("Registration failed. Please try again.");
+        return;
+      }
+
+      setUserRegister({ username: "", password: "", confirmpassword: "" });
+      navigate(registeredUser.is_admin ? "/admin" : "/employee");
+    } catch (error) {
+      console.error("Register failed:", error);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
-    setUserRegister({
-      username: "",
-      password: "",
-      confirmpassword: "",
-    });
   };
 
   const changeLoginHandler = (e) => {
